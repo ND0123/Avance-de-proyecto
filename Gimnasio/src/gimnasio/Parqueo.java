@@ -26,6 +26,12 @@ private char[][] g1 = new char[4][5];
         marcarEntrenadores(g2);
         marcarEntrenadores(g3);
     }
+    
+    
+    
+    
+    
+    
 private void inicializar(char[][] nivel, char valor) {
         for (int i = 0; i < nivel.length; i++) {
             for (int j = 0; j < nivel[0].length; j++) {

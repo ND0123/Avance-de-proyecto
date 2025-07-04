@@ -10,19 +10,6 @@ package gimnasio;
  */
 public class Socio {
 
-    private String id;
-    private String nombre;
-    private boolean activo;
-
-    public Socio() {
-    }
-
-    public Socio(String id, String nombre, boolean activo) {
-        this.id = id;
-        this.nombre = nombre;
-        this.activo = activo;
-    }
-
     public String getId() {
         return id;
     }
@@ -46,6 +33,29 @@ public class Socio {
     public void setActivo(boolean activo) {
         this.activo = activo;
     }
+
+    public String getClasesGrupal() {
+        return clasesGrupal;
+    }
+
+    public void setClasesGrupal(String clasesGrupal) {
+        this.clasesGrupal = clasesGrupal;
+    }
+
+    private String id;
+    private String nombre;
+    private boolean activo;
+    private String clasesGrupal;
+
+    
+    public Socio(String id, String nombre, boolean activo, String clasesGrupal) {
+        this.id = id;
+        this.nombre = nombre;
+        this.activo = activo;
+        this.clasesGrupal = clasesGrupal;
+    }
+    
+
     
     
 }

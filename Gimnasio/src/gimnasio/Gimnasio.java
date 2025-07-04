@@ -55,10 +55,10 @@ static Socio[] socios = new Socio[10];
     }
 
     public static void cargarSocios() { //La lista de los 4 socios por el momento con su id y nombres
-        socios[0] = new Socio("S001", "Carlos Gomez", true);
-        socios[1] = new Socio("S002", "Ana Ruiz", true);
-        socios[2] = new Socio("S003", "Luis Torres", false);
-        socios[3] = new Socio("S004", "Maria Solis", true);
+        socios[0] = new Socio("S001", "Carlos Gomez", true, "Pilates");
+        socios[1] = new Socio("S002", "Ana Virginia", true, "Pilates");
+        socios[2] = new Socio("S003", "Luis Torres", false, "Pilates");
+        socios[3] = new Socio("S004", "Maria Solis", true, "Pilates");
     }
 
     public static Socio buscarSocio(String id) { //Esto es un for que busca entre la lista al que solicitan
