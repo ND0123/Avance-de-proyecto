@@ -1,20 +1,11 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package gimnasio;
 
-/**
- *
- * @author XPC
- */
+import javax.swing.JOptionPane;
+
 public class Parqueo {
-private char[][] g1 = new char[4][5];
+    private char[][] g1 = new char[4][5];
     private char[][] g2 = new char[5][5];
     private char[][] g3 = new char[6][5];
-    
-    // Matrices paralelas para guardar ID de socio
-    
 
     public Parqueo() {
         inicializar(g1, 'L');
@@ -29,7 +20,8 @@ private char[][] g1 = new char[4][5];
         marcarEntrenadores(g2);
         marcarEntrenadores(g3);
     }
-private void inicializar(char[][] nivel, char valor) {
+
+    private void inicializar(char[][] nivel, char valor) {
         for (int i = 0; i < nivel.length; i++) {
             for (int j = 0; j < nivel[0].length; j++) {
                 nivel[i][j] = valor;
@@ -60,22 +52,22 @@ private void inicializar(char[][] nivel, char valor) {
     }
 
     private void mostrarNivel(char[][] nivel, String nombre) {
-        System.out.println("Nivel " + nombre + ":");
-        System.out.print("   ");
+        StringBuilder sb = new StringBuilder();
+        sb.append("Nivel ").append(nombre).append(":\n   ");
         for (int i = 1; i <= 5; i++) {
-            System.out.print("| " + i + " ");
+            sb.append("| ").append(i).append(" ");
         }
-        System.out.println("|");
+        sb.append("|\n");
 
         for (int i = 0; i < nivel.length; i++) {
-            System.out.print((char)('A' + i) + "  ");
+            sb.append((char) ('A' + i)).append("  ");
             for (int j = 0; j < nivel[0].length; j++) {
-                
-                System.out.print("| " + nivel[i][j] + " ");
+                sb.append("| ").append(nivel[i][j]).append(" ");
             }
-            System.out.println("|");
+            sb.append("|\n");
         }
-        System.out.println();
+
+        JOptionPane.showMessageDialog(null, sb.toString(), "Estado del Nivel " + nombre, JOptionPane.INFORMATION_MESSAGE);
     }
 
     public void mostrarTodo() {
@@ -83,7 +75,8 @@ private void inicializar(char[][] nivel, char valor) {
         mostrarNivel(g2, "G2");
         mostrarNivel(g3, "G3");
     }
- public boolean asignarEspacio(int nivel, int fila, int columna) {
+
+    public boolean asignarEspacio(int nivel, int fila, int columna) {
         char[][] seleccionado;
 
         if (nivel == 1) {
@@ -93,45 +86,51 @@ private void inicializar(char[][] nivel, char valor) {
         } else if (nivel == 3) {
             seleccionado = g3;
         } else {
+            JOptionPane.showMessageDialog(null, "Nivel inválido.", "Error", JOptionPane.ERROR_MESSAGE);
             return false;
         }
 
         if (fila >= 0 && fila < seleccionado.length && columna >= 0 && columna < seleccionado[0].length) {
             if (seleccionado[fila][columna] == 'L') {
-                seleccionado[fila][columna] = 'O'; // "O" de ocupado
+                seleccionado[fila][columna] = 'O'; // Ocupado
                 return true;
+            } else {
+                JOptionPane.showMessageDialog(null, "El espacio ya está ocupado o reservado.", "Advertencia", JOptionPane.WARNING_MESSAGE);
             }
+        } else {
+            JOptionPane.showMessageDialog(null, "Posición fuera de rango.", "Error", JOptionPane.ERROR_MESSAGE);
         }
-        return false;
-    }
-        
-                  
-public boolean asignarEspacio(String nivel, char fila, int columna) {
-    char[][] parqueoSeleccionado = null;
 
-    switch (nivel.toUpperCase()) {
-        case "G1": parqueoSeleccionado = g1; break;
-        case "G2": parqueoSeleccionado = g2; break;
-        case "G3": parqueoSeleccionado = g3; break;
-        default: System.out.println("Nivel inválido."); return false;
-    }
-
-    int filaIndex = fila - 'A';
-    int columnaIndex = columna - 1;
-
-    if (filaIndex < 0 || filaIndex >= parqueoSeleccionado.length ||
-        columnaIndex < 0 || columnaIndex >= parqueoSeleccionado[0].length) {
-        System.out.println("Posición fuera de rango.");
         return false;
     }
 
-    if (parqueoSeleccionado[filaIndex][columnaIndex] == 'L') {
-        parqueoSeleccionado[filaIndex][columnaIndex] = 'O';
-        return true;
-    } else {
-        System.out.println("Espacio ya ocupado o reservado.");
-        return false;
-    }
-}
+    public boolean asignarEspacio(String nivel, char fila, int columna) {
+        char[][] parqueoSeleccionado = null;
 
+        switch (nivel.toUpperCase()) {
+            case "G1": parqueoSeleccionado = g1; break;
+            case "G2": parqueoSeleccionado = g2; break;
+            case "G3": parqueoSeleccionado = g3; break;
+            default:
+                JOptionPane.showMessageDialog(null, "Nivel inválido.", "Error", JOptionPane.ERROR_MESSAGE);
+                return false;
+        }
+
+        int filaIndex = fila - 'A';
+        int columnaIndex = columna - 1;
+
+        if (filaIndex < 0 || filaIndex >= parqueoSeleccionado.length ||
+            columnaIndex < 0 || columnaIndex >= parqueoSeleccionado[0].length) {
+            JOptionPane.showMessageDialog(null, "Posición fuera de rango.", "Error", JOptionPane.ERROR_MESSAGE);
+            return false;
+        }
+
+        if (parqueoSeleccionado[filaIndex][columnaIndex] == 'L') {
+            parqueoSeleccionado[filaIndex][columnaIndex] = 'O';
+            return true;
+        } else {
+            JOptionPane.showMessageDialog(null, "Espacio ya ocupado o reservado.", "Advertencia", JOptionPane.WARNING_MESSAGE);
+            return false;
+        }
+    }
 }

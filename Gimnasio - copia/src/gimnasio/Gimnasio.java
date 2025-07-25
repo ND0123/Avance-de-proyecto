@@ -4,98 +4,103 @@
  */
 package gimnasio;
 
-import java.util.Scanner;
+import javax.swing.JOptionPane;
 
-/**
- *
- * @author XPC
- */
 public class Gimnasio {
 
     static Socio[] socios = new Socio[10];
     static Parqueo parqueo = new Parqueo();
-    static Scanner entradaUsuario = new Scanner(System.in);
 
-    /**
-     * @param args the command line arguments
-     */
     public static void main(String[] args) {
-        // TODO code application logic here
         cargarSocios();
         int opcion;
 
         do {
-            System.out.println("--- MENÚ PRINCIPAL ---");
-            System.out.println("1. Mostrar parqueos");
-            System.out.println("2. Buscar socio por ID");
-            System.out.println("3. Asignar un parqueo");
-            System.out.println("0. Salir");
-            System.out.print("Ingrese opcion: ");
-            opcion = entradaUsuario.nextInt();
-            entradaUsuario.nextLine(); // Limpia buffer
+            String input = JOptionPane.showInputDialog(
+                "--- MENÚ PRINCIPAL ---\n"
+                + "1. Mostrar parqueos\n"
+                + "2. Buscar socio por ID\n"
+                + "3. Asignar un parqueo\n"
+                + "0. Salir\n\n"
+                + "Ingrese una opción:"
+            );
+
+            if (input == null) break; // Cancelar ventana
+
+            try {
+                opcion = Integer.parseInt(input);
+            } catch (NumberFormatException e) {
+                JOptionPane.showMessageDialog(null, "Ingrese un número válido.");
+                continue;
+            }
 
             switch (opcion) {
                 case 1:
                     parqueo.mostrarTodo();
                     break;
                 case 2:
-                    System.out.print("Ingrese ID del socio: ");
-                    String id = entradaUsuario.nextLine().trim();
+                    String id = JOptionPane.showInputDialog("Ingrese ID del socio:");
                     Socio s = buscarSocio(id);
                     if (s != null) {
-                        System.out.println("Socio encontrado: " + s.getNombre() + " | Activo: " + s.isActivo());
+                        JOptionPane.showMessageDialog(null,
+                            "Socio encontrado: " + s.getNombre() + " | Activo: " + s.isActivo());
                     } else {
-                        System.out.println("Socio no encontrado.");
+                        JOptionPane.showMessageDialog(null, "Socio no encontrado.");
                     }
                     break;
                 case 3:
-                    System.out.print("Ingrese ID del socio: ");
-                    String idSocio = entradaUsuario.nextLine();
+                    String idSocio = JOptionPane.showInputDialog("Ingrese ID del socio:");
                     Socio socio = buscarSocio(idSocio);
 
                     if (socio != null && socio.isActivo()) {
-                        System.out.print("Ingrese nivel de parqueo (G1, G2, G3): ");
-                        String nivel = entradaUsuario.nextLine();
+                        String nivel = JOptionPane.showInputDialog("Ingrese nivel de parqueo (G1, G2, G3):");
 
-                        System.out.print("Ingrese fila (A-F): ");
-                        char fila = entradaUsuario.nextLine().toUpperCase().charAt(0);
+                        String filaInput = JOptionPane.showInputDialog("Ingrese fila (A-F):");
+                        if (filaInput == null || filaInput.length() == 0) break;
+                        char fila = Character.toUpperCase(filaInput.charAt(0));
 
-                        System.out.print("Ingrese columna (1-5): ");
-                        int columna = entradaUsuario.nextInt();
-                        entradaUsuario.nextLine(); // limpia buffer
+                        String colInput = JOptionPane.showInputDialog("Ingrese columna (1-5):");
+                        int columna;
+                        try {
+                            columna = Integer.parseInt(colInput);
+                        } catch (NumberFormatException e) {
+                            JOptionPane.showMessageDialog(null, "Columna inválida.");
+                            break;
+                        }
 
                         boolean asignado = parqueo.asignarEspacio(nivel, fila, columna);
                         if (asignado) {
-                            System.out.println("Parqueo asignado correctamente.");
+                            JOptionPane.showMessageDialog(null, "Parqueo asignado correctamente.");
+                        } else {
+                            JOptionPane.showMessageDialog(null, "No se pudo asignar el parqueo.");
                         }
                     } else {
-                        System.out.println("Socio no encontrado o inactivo.");
+                        JOptionPane.showMessageDialog(null, "Socio no encontrado o inactivo.");
                     }
                     break;
                 case 0:
-                    System.out.println("Saliendo del sistema.");
+                    JOptionPane.showMessageDialog(null, "Saliendo del sistema.");
                     break;
                 default:
-                    System.out.println("Opción inválida.");
+                    JOptionPane.showMessageDialog(null, "Opción inválida.");
             }
-        } while (opcion != 0);
+
+        } while (true);
     }
 
-    public static void cargarSocios() { //La lista de los 4 socios por el momento con su id y nombres
+    public static void cargarSocios() {
         socios[0] = new Socio("S001", "Carlos Gomez", true);
         socios[1] = new Socio("S002", "Ana Ruiz", true);
         socios[2] = new Socio("S003", "Luis Torres", false);
         socios[3] = new Socio("S004", "Maria Solis", true);
     }
 
-    public static Socio buscarSocio(String id) { //Esto es un for que busca entre la lista al que solicitan
+    public static Socio buscarSocio(String id) {
         for (int i = 0; i < socios.length; i++) {
             if (socios[i] != null && socios[i].getId().equalsIgnoreCase(id)) {
                 return socios[i];
             }
         }
         return null;
-
     }
-
 }
