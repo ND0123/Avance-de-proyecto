@@ -10,10 +10,12 @@ public class Gimnasio {
 
     static Socio[] socios = new Socio[10];
     static Parqueo parqueo = new Parqueo();
+    static CabinaInsonorizada[] cabina = new CabinaInsonorizada[9];
 
     public static void main(String[] args) {
         cargarSocios();
         int opcion;
+        CabinaInsonorizada.llenaDataAleatoria(cabina);
 
         do {
             String input = JOptionPane.showInputDialog(
@@ -21,6 +23,7 @@ public class Gimnasio {
                 + "1. Mostrar parqueos\n"
                 + "2. Buscar socio por ID\n"
                 + "3. Asignar un parqueo\n"
+                + "4. Cabinas insonorizadas\n"
                 + "0. Salir\n\n"
                 + "Ingrese una opción:"
             );
@@ -77,6 +80,10 @@ public class Gimnasio {
                     } else {
                         JOptionPane.showMessageDialog(null, "Socio no encontrado o inactivo.");
                     }
+                    break;
+                case 4:
+                    int opcHorarioCabinas = CabinaInsonorizada.MostrarHorariosCabinas(cabina);
+                    CabinaInsonorizada.reservarHorario(cabina, opcHorarioCabinas);
                     break;
                 case 0:
                     JOptionPane.showMessageDialog(null, "Saliendo del sistema.");
