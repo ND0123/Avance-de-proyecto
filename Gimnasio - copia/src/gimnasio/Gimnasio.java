@@ -11,12 +11,14 @@ public class Gimnasio {
     static Socio[] socios = new Socio[10];
     static Parqueo parqueo = new Parqueo();
     static CabinaInsonorizada[] cabina = new CabinaInsonorizada[9];
+    static ClaseGrupal[] claseGrupal = new ClaseGrupal[10] ;
 
     public static void main(String[] args) {
         cargarSocios();
         int opcion;
         CabinaInsonorizada.llenaDataAleatoria(cabina);
-
+        ClaseGrupal.llenaDataAleatoria(claseGrupal);
+        
         do {
             String input = JOptionPane.showInputDialog(
                 "--- MENÚ PRINCIPAL ---\n"
@@ -24,7 +26,7 @@ public class Gimnasio {
                 + "2. Buscar socio por ID\n"
                 + "3. Asignar un parqueo\n"
                 + "4. Cabinas insonorizadas\n"
-                + "0. Salir\n\n"
+                + "5. Clases Grupales \n"
                 + "Ingrese una opción:"
             );
 
@@ -84,6 +86,10 @@ public class Gimnasio {
                 case 4:
                     int opcHorarioCabinas = CabinaInsonorizada.MostrarHorariosCabinas(cabina);
                     CabinaInsonorizada.reservarHorario(cabina, opcHorarioCabinas);
+                    break;
+                case 5:
+                    int opcHorarioClasesGrupales = ClaseGrupal.MostrarHorariosClasesGrupales(claseGrupal);
+                    ClaseGrupal.reservarHorario(claseGrupal, opcHorarioClasesGrupales);
                     break;
                 case 0:
                     JOptionPane.showMessageDialog(null, "Saliendo del sistema.");

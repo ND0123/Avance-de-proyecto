@@ -75,6 +75,7 @@ public class CabinaInsonorizada {
         vector[indice-1].setEstado(estado);
     }
 
+    
     public static int MostrarHorariosCabinas(CabinaInsonorizada[] vector) {
 
         StringBuilder resultado = new StringBuilder();
@@ -96,3 +97,4 @@ public class CabinaInsonorizada {
         return opcHorario;
     }
 }
+    
