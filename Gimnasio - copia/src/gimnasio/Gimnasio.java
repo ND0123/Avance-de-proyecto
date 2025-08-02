@@ -1,9 +1,6 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Main.java to edit this template
- */
 package gimnasio;
 
+import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 
 public class Gimnasio {
@@ -11,14 +8,27 @@ public class Gimnasio {
     static Socio[] socios = new Socio[10];
     static Parqueo parqueo = new Parqueo();
     static CabinaInsonorizada[] cabina = new CabinaInsonorizada[9];
-    static ClaseGrupal[] claseGrupal = new ClaseGrupal[10] ;
+    static ClaseGrupal[] claseGrupal = new ClaseGrupal[10];
 
     public static void main(String[] args) {
         cargarSocios();
-        int opcion;
         CabinaInsonorizada.llenaDataAleatoria(cabina);
         ClaseGrupal.llenaDataAleatoria(claseGrupal);
-        
+
+        // Mostrar la ventana principal en el hilo de eventos de Swing
+        javax.swing.SwingUtilities.invokeLater(() -> {
+            MainWindows mainWindow = new MainWindows();
+            mainWindow.setTitle("Gimnasio");
+            mainWindow.setLocationRelativeTo(null); // centra
+            mainWindow.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        });
+
+        // Ejecutar el menú en un hilo separado para no bloquear la GUI
+        new Thread(Gimnasio::mostrarMenu).start();
+    }
+
+    private static void mostrarMenu() {
+        int opcion;
         do {
             String input = JOptionPane.showInputDialog(
                 "--- MENÚ PRINCIPAL ---\n"
