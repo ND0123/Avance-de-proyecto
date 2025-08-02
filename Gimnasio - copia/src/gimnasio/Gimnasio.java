@@ -36,7 +36,8 @@ public class Gimnasio {
                 + "2. Buscar socio por ID\n"
                 + "3. Asignar un parqueo\n"
                 + "4. Cabinas insonorizadas\n"
-                + "5. Clases Grupales \n"
+                + "5. Clases Grupales \n"                
+                + "6. Sala de Pesas \n"
                 + "Ingrese una opción:"
             );
 
@@ -101,6 +102,10 @@ public class Gimnasio {
                     int opcHorarioClasesGrupales = ClaseGrupal.MostrarHorariosClasesGrupales(claseGrupal);
                     ClaseGrupal.reservarHorario(claseGrupal, opcHorarioClasesGrupales);
                     break;
+
+                case 6:
+                    JOptionPane.showMessageDialog(null, "Sala de Pesas (Aqui van los metodos de tu clase como menus y todo lo demas )");
+                    break;
                 case 0:
                     JOptionPane.showMessageDialog(null, "Saliendo del sistema.");
                     break;
@@ -127,3 +132,4 @@ public class Gimnasio {
         return null;
     }
 }
+
