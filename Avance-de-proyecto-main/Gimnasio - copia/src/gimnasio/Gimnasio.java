@@ -3,20 +3,17 @@ package gimnasio;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 
-
 public class Gimnasio {
 
     static Socio[] socios = new Socio[10];
     static Parqueo parqueo = new Parqueo();
     static CabinaInsonorizada[] cabina = new CabinaInsonorizada[9];
-    static ClaseGrupal[] claseGrupal = new ClaseGrupal[6];
-    
-        
+    static ClaseGrupal[] claseGrupal = new ClaseGrupal[10];
 
     public static void main(String[] args) {
         cargarSocios();
         CabinaInsonorizada.llenaDataAleatoria(cabina);
-        
+        ClaseGrupal.llenaDataAleatoria(claseGrupal);
 
         // Mostrar la ventana principal en el hilo de eventos de Swing
         javax.swing.SwingUtilities.invokeLater(() -> {
@@ -39,7 +36,8 @@ public class Gimnasio {
                 + "2. Buscar socio por ID\n"
                 + "3. Asignar un parqueo\n"
                 + "4. Cabinas insonorizadas\n"
-                + "5. Clases Grupales \n"
+                + "5. Clases Grupales \n"                
+                + "6. Sala de Pesas \n"
                 + "Ingrese una opción:"
             );
 
@@ -101,7 +99,12 @@ public class Gimnasio {
                     CabinaInsonorizada.reservarHorario(cabina, opcHorarioCabinas);
                     break;
                 case 5:
-                    ModuloClaseGrupales.ejecutar();
+                    int opcHorarioClasesGrupales = ClaseGrupal.MostrarHorariosClasesGrupales(claseGrupal);
+                    ClaseGrupal.reservarHorario(claseGrupal, opcHorarioClasesGrupales);
+                    break;
+
+                case 6:
+                    JOptionPane.showMessageDialog(null, "Sala de Pesas (Aqui van los metodos de tu clase como menus y todo lo demas )");
                     break;
                 case 0:
                     JOptionPane.showMessageDialog(null, "Saliendo del sistema.");
@@ -129,3 +132,4 @@ public class Gimnasio {
         return null;
     }
 }
+

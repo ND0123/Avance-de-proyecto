@@ -11,122 +11,112 @@ import javax.swing.JOptionPane;
  * @author ##main
  */
 public class ClaseGrupal {
-    private String nombre;               // Ej: Yoga, Zumba, Pilates
-    private String horario;             // Ej: "9:00 AM"
-    private int capacidadMaxima;        // Ej: 20
-    private String[] inscritos;         // Guarda los IDs de los socios inscritos
-    private int cantidadActual;         // Cuántos socios hay inscritos
 
-    public ClaseGrupal(String nombre, String horario, int capacidadMaxima) {
-        this.nombre = nombre;
-        this.horario = horario;
-        this.capacidadMaxima = capacidadMaxima;
-        this.inscritos = new String[capacidadMaxima];
-        this.cantidadActual = 0;
-    }
-
-    public String getNombre() {
-        return nombre;
-    }
-
-    public void setNombre(String nombre) {
-        this.nombre = nombre;
-    }
-
-    public String getHorario() {
-        return horario;
-    }
-
-    public void setHorario(String horario) {
-        this.horario = horario;
-    }
-
-    public int getCapacidadMaxima() {
-        return capacidadMaxima;
-    }
-
-    public void setCapacidadMaxima(int capacidadMaxima) {
-        this.capacidadMaxima = capacidadMaxima;
-    }
-
-    public String[] getInscritos() {
-        return inscritos;
-    }
-
-    public void setInscritos(String[] inscritos) {
-        this.inscritos = inscritos;
-    }
-
-    public int getCantidadActual() {
-        return cantidadActual;
-    }
-
-    public void setCantidadActual(int cantidadActual) {
-        this.cantidadActual = cantidadActual;
-    }
+    private String nombreClase;
+    private String hora;
+    private String idSsocio;
+    private int cupoMax;
+    private int cupoActual;
+    private boolean estado;
     
+    public static void llenaDataAleatoria(ClaseGrupal[] vector ){
+        for (int i = 0; i < vector.length; i++) {
+            vector[i] = new ClaseGrupal("nombre", i+9+":00", "nulo", i, i, true);
+        }
+    }
+    public static int MostrarHorariosClasesGrupales(ClaseGrupal[] vector) {
 
+        StringBuilder resultado = new StringBuilder();
+
+        resultado.append("                      Horarios disponibles\n Seleccione un horario para reservar\n=================================\n");
+
+        for (int i = 0; i < vector.length; i++) {
+            boolean estadoreserva = vector[i].getEstado();
+            if (estadoreserva) {
+                int indice = i + 1;
+                resultado.append(indice + "- ");
+                resultado.append(vector[i].getHora());
+                resultado.append("\n");
+            } else {
+            }
+        }
+        int opcHorario = Integer.parseInt(JOptionPane.showInputDialog(null, resultado));
+        return opcHorario;
+    }
+    public static void reservarHorario(ClaseGrupal[] vector, int indice ){  
+        //JOptionPane.showInputDialog(null, "El numero de horario que desea modificar");
+        Boolean estado = false;
+        String id = JOptionPane.showInputDialog(null, "Ingrese el ID del socio de la reserva: ");
+        vector[indice-1].setIdSsocio(id);
+        vector[indice-1].getHora();
+        
+    }
     @Override
     public String toString() {
-        return "ClaseGrupal{" + "nombre=" + nombre + ", horario=" + horario + ", capacidadMaxima=" + capacidadMaxima + ", inscritos=" + inscritos + ", cantidadActual=" + cantidadActual + '}';
+        return "ClaseGrupal{" + "nombreClase=" + nombreClase + ", hora=" + hora + ", idSsocio=" + idSsocio + ", cupoMax=" + cupoMax + ", cupoActual=" + cupoActual + ", estado=" + estado + '}';
+    }
+
+    public ClaseGrupal(String nombreClase, String hora, String idSsocio, int cupoMax, int cupoActual, boolean estado) {
+        this.nombreClase = nombreClase;
+        this.hora = hora;
+        this.idSsocio = idSsocio;
+        this.cupoMax = cupoMax;
+        this.cupoActual = cupoActual;
+        this.estado = estado;
+    }
+
+    public String getNombreClase() {
+        return nombreClase;
+    }
+
+    public void setNombreClase(String nombreClase) {
+        this.nombreClase = nombreClase;
+    }
+
+    public String getHora() {
+        return hora;
+    }
+
+    public void setHora(String hora) {
+        this.hora = hora;
+    }
+
+    public String getIdSsocio() {
+        return idSsocio;
+    }
+
+    public void setIdSsocio(String idSsocio) {
+        this.idSsocio = idSsocio;
+    }
+
+    public int getCupoMax() {
+        return cupoMax;
+    }
+
+    public void setCupoMax(int cupoMax) {
+        this.cupoMax = cupoMax;
+    }
+
+    public int getCupoActual() {
+        return cupoActual;
+    }
+
+    public void setCupoActual(int cupoActual) {
+        this.cupoActual = cupoActual;
+    }
+
+    public boolean getEstado() {
+        return estado;
+    }
+
+    public void setEstado(boolean estado) {
+        this.estado = estado;
     }
     
-    public int getCuposDisponibles() {
-        return capacidadMaxima - cantidadActual;
-    }
 
-    // Registro de socios
-    public boolean registrarSocio(String idSocio) {
-        if (cantidadActual >= capacidadMaxima) {
-            JOptionPane.showMessageDialog(null, "La clase está llena.");
-            return false;
-        }
-
-        for (int i = 0; i < cantidadActual; i++) {
-            if (inscritos[i].equals(idSocio)) {
-                JOptionPane.showMessageDialog(null, "El socio ya está inscrito.");
-                return false;
-            }
-        }
-
-        inscritos[cantidadActual] = idSocio;
-        cantidadActual++;
-        JOptionPane.showMessageDialog(null, "Socio registrado en " + nombre + " (" + horario + ").");
-        return true;
-    }
-
-    // Cancelación de reserva
-    public boolean cancelarReserva(String idSocio) {
-        for (int i = 0; i < cantidadActual; i++) {
-            if (inscritos[i].equals(idSocio)) {
-                for (int j = i; j < cantidadActual - 1; j++) {
-                    inscritos[j] = inscritos[j + 1];
-                }
-                inscritos[cantidadActual - 1] = null;
-                cantidadActual--;
-                JOptionPane.showMessageDialog(null, "Reserva cancelada.");
-                return true;
-            }
-        }
-        JOptionPane.showMessageDialog(null, "El socio no estaba inscrito.");
-        return false;
-    }
-
-    // Mostrar lista de inscritos
-    public void mostrarInscritos() {
-        if (cantidadActual == 0) {
-            JOptionPane.showMessageDialog(null, "No hay inscritos en esta clase.");
-            return;
-        }
-
-        String lista = "Inscritos en " + nombre + " (" + horario + "):\n";
-        for (int i = 0; i < cantidadActual; i++) {
-            lista += "- " + inscritos[i] + "\n";
-        }
-        JOptionPane.showMessageDialog(null, lista);
-    }
     
-       
+    
+    
 }
 
 
