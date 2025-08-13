@@ -1,4 +1,4 @@
-# Avance-de-proyecto
+# Grupo 2
 Grupo 2 Introduccion a la programacion 
 Integrantes:
 Jose David Gutierrez Diaz
